@@ -1,15 +1,18 @@
 from datetime import date
 from paddleocr import PaddleOCR,draw_ocr
 from PIL import Image
+import os
 import logging
 
 logging.basicConfig(filename='log/log.log',level=logging.DEBUG)
 img_path = './imgs/img_04.jpg'
 image = Image.open(img_path).convert('RGB')
+temp_img = 'cut.jpg'
 
-def rec(image:Image):
+def rec(image_name):
     ocr = PaddleOCR(use_angle_cls=True,lang='japan')
-    set = ocr.ocr(image,cls=True)
+    # need a file not instance
+    set = ocr.ocr(image_name,cls=True)
     result = set[0]
     # data = set[0][0][1][0]
     logging.info(date.today().strftime("%b-%d-%Y"))
@@ -22,9 +25,11 @@ def rec(image:Image):
 
 
 def cut_img(image:Image):
-    box = (360,417,730,509)
+    box = (100,400,980,550)
     cut = image.crop(box)
-    cut.show()
+    cut.save(temp_img)
+    rec(temp_img)
+    os.remove(temp_img)
     return cut
 # dir = [{key,val} for key,val in result]
 

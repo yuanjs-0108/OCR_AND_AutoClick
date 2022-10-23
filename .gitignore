@@ -1,3 +1,4 @@
+*.jpg
 # ignore dir
 src/img
 src/log

@@ -3,3 +3,4 @@
 ## Requirment
 - Paddle
 - Paddle_ocr
+- translators

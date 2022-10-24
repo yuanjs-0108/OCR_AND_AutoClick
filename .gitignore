@@ -1,5 +1,5 @@
 *.jpg
 # ignore dir
-src/img
+src/imgs
 src/log
 

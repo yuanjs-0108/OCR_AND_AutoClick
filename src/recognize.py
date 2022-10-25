@@ -5,15 +5,16 @@ import os
 import logging
 import translators as trans
 
-logging.basicConfig(filename='log/log.log',level=logging.DEBUG)
-# logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(filename='log/log.log',level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 img_path = './imgs/img_08.jpg'
 image = Image.open(img_path).convert('RGB')
+ocr_jp = PaddleOCR(use_angle_cls=True,lang='japan')
+ocr_zh = PaddleOCR(use_angle_cls=True,lang='ch')
 
 def rec_jp(image_name):
-    ocr = PaddleOCR(use_angle_cls=True,lang='japan')
     # need a file not instance
-    set = ocr.ocr(image_name,cls=True)
+    set = ocr_jp.ocr(image_name,cls=True)
     result = set[0]
     # data = set[0][0][1][0]
     logging.info(date.today().strftime("%b-%d-%Y"))
@@ -24,6 +25,9 @@ def rec_jp(image_name):
     # logging.debug(txts)
     return txts
     # scores = [line[1][1] for line in result]
+
+def get_kana():
+    pass
 
 def jp_2_zh(txts):
     if len(txts) == 0:
@@ -38,8 +42,7 @@ def zh_2_jp(txts):
     return zh_to_jp
 
 def rec_zh(image_name):
-    ocr = PaddleOCR(use_angle_cls=True,lang='ch')
-    set = ocr.ocr(image_name,cls=True)
+    set = ocr_zh.ocr(image_name,cls=True)
     result = set[0]
     # data = set[0][0][1][0]
     logging.info(date.today().strftime("%b-%d-%Y"))

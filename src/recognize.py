@@ -1,8 +1,10 @@
 from datetime import date
+import re
 from paddleocr import PaddleOCR,draw_ocr
 from PIL import Image
 import os
 import logging
+from pykakasi import Kakasi
 import translators as trans
 
 # logging.basicConfig(filename='log/log.log',level=logging.DEBUG)
@@ -26,8 +28,9 @@ def rec_jp(image_name):
     return txts
     # scores = [line[1][1] for line in result]
 
-def get_kana():
-    pass
+def get_kana(txt):
+    result = Kakasi.convert(txt)
+    return (result['kana'],'')[len(result)]
 
 def jp_2_zh(txts):
     if len(txts) == 0:
